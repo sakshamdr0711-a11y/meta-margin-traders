@@ -1,0 +1,94 @@
+body {
+    font-family: Inter, sans-serif;
+    background: #0b0b0c;
+    color: #e5e7eb;
+}
+
+.glass {
+    background: linear-gradient(180deg, #131314, #101011);
+    border: 1px solid #242426;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+}
+
+.gold {
+    color: #d4af37;
+}
+
+.btn {
+    background: #d4af37;
+    color: #111;
+    font-weight: 700;
+
+}
+
+.btn:hover {
+    background: #b9911f;
+
+}
+
+.tab.active {
+    display: block;
+
+}
+
+.tab {
+    display: none;
+
+}
+
+.tabbtn.active {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: #d4af37;
+    color: #d4af37;
+
+}
+
+input,
+select {
+    background: #1b1b1d;
+    border: 1px solid #333;
+    padding: 0.7rem;
+    border-radius: 0.6rem;
+    width: 100%;
+}
+
+table td,
+table th {
+    padding: 12px;
+    border-bottom: 1px solid #252528;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 320px !important;
+    min-height: 320px;
+}
+
+tr:hover {
+    background: #171719;
+}
+
+.action-btn{
+    padding:8px 14px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:600;
+    transition:.25s;
+}
+
+.edit-btn{
+    background:#2563eb;
+}
+
+.edit-btn:hover{
+    background:#1d4ed8;
+}
+
+.delete-btn{
+    background:#dc2626;
+}
+
+.delete-btn:hover{
+    background:#b91c1c;
+}

@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Meta Margin Traders Application</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <div id="loginScreen">
+      <div class="min-h-screen flex items-center justify-center">
+        <div class="glass w-full max-w-lg rounded-2xl p-10 text-center">
+          <div class="text-5xl font-black gold mb-3">MMT</div>
+
+          <h1 class="text-3xl font-bold">Meta Margin Traders</h1>
+
+          <p class="text-zinc-400 mb-10">!!!Prototype hain bro!!!</p>
+
+          <button id="adminLogin" class="btn w-full py-4 rounded-xl mb-4">
+            Login as Admin
+          </button>
+
+          <button
+            id="customerLogin"
+            class="w-full py-4 rounded-xl border border-zinc-700"
+          >
+            Login as Customer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="app" style="display: none">
+      <header
+        class="sticky top-0 backdrop-blur bg-black/50 border-b border-zinc-800 z-20"
+      >
+        <div class="max-w-7xl mx-auto flex justify-between items-center p-5">
+          <div class="flex gap-4 items-center">
+            <div
+              class="w-14 h-14 rounded-xl border-2 border-yellow-600 flex items-center justify-center font-black text-yellow-500 text-xl"
+            >
+              MMT
+            </div>
+
+            <div>
+              <h1 class="text-2xl font-extrabold">Meta Margin Traders</h1>
+              <div class="uppercase tracking-[.35em] text-xs text-zinc-500">
+                Heheehehehehehehehe It's a prototype
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <span id="roleText" class="text-zinc-400"></span>
+
+            <button
+              onclick="logout()"
+              class="px-4 py-2 rounded-lg border border-red-600"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="max-w-7xl mx-auto p-6">
+        <div class="glass rounded-2xl p-2 flex flex-wrap gap-2 mb-6">
+          <button
+            class="tabbtn active px-4 py-2 rounded-lg border border-zinc-700"
+            data="t0"
+          >
+            Dashboard
+          </button>
+
+          <button
+            class="tabbtn px-4 py-2 rounded-lg border border-zinc-700"
+            data="t5"
+          >
+            Growth Analytics
+          </button>
+
+          <button
+            class="tabbtn px-4 py-2 rounded-lg border border-zinc-700"
+            data="t6"
+          >
+            Bot Analysis
+          </button>
+
+          <button
+            class="tabbtn px-4 py-2 rounded-lg border border-zinc-700"
+            data="t1"
+          >
+            Brokers
+          </button>
+
+          <button
+            class="tabbtn px-4 py-2 rounded-lg border border-zinc-700"
+            data="t2"
+          >
+            Bots
+          </button>
+
+          <button
+            class="tabbtn px-4 py-2 rounded-lg border border-zinc-700"
+            data="t3"
+          >
+            Customers
+          </button>
+
+          <button
+            class="tabbtn px-4 py-2 rounded-lg border border-zinc-700"
+            data="t4"
+          >
+            Investments
+          </button>
+        </div>
+
+        <section id="t0" class="tab active">
+          <div class="grid md:grid-cols-4 gap-5 mb-6">
+            <div class="glass rounded-xl p-5">
+              <div class="text-zinc-400">Total AUM</div>
+              <div id="aumValue" class="text-4xl font-black gold">$0</div>
+              <div class="text-green-400 text-sm mt-2">0%</div>
+            </div>
+
+            <div class="glass rounded-xl p-5">
+              <div class="text-zinc-400">Customers</div>
+              <div id="customerCount" class="text-4xl font-black">0</div>
+            </div>
+
+            <div class="glass rounded-xl p-5">
+              <div class="text-zinc-400">Active Bots</div>
+              <div id="botCount" class="text-4xl font-black">0</div>
+            </div>
+
+            <div class="glass rounded-xl p-5">
+              <div class="text-zinc-400">Connected Brokers</div>
+              <div id="brokerCount" class="text-4xl font-black">0</div>
+            </div>
+          </div>
+
+          <div class="grid lg:grid-cols-3 gap-5">
+            <div class="glass rounded-xl p-5 lg:col-span-2">
+              <div class="font-bold mb-4">AUM Growth</div>
+              <canvas id="c1"></canvas>
+            </div>
+
+            <div class="glass rounded-xl p-5">
+              <div class="font-bold mb-4">Broker Deployment</div>
+              <canvas id="c2"></canvas>
+            </div>
+
+            <div class="glass rounded-xl p-5">
+              <div class="font-bold mb-4">Live Activity</div>
+              <ul class="space-y-4 text-sm">
+                <li>
+                  🟢 Smart AI allocated <span class="gold">$50,000</span> to
+                  Vantage
+                </li>
+                <li>🟢 Nexus opened 14 new positions</li>
+                <li>🟡 Customer Rahul added investment</li>
+                <li>🔴 One withdrawal request pending</li>
+              </ul>
+            </div>
+
+            <div class="glass rounded-xl p-5 lg:col-span-2">
+              <div class="flex justify-between mb-4">
+                <div class="font-bold">Recent Investments</div>
+                <button class="btn px-4 py-2 rounded-lg">
+                  + Log Investment
+                </button>
+              </div>
+              <tbody id="recentInvestmentTable">               
+              </tbody>
+            </div>
+          </div>
+        </section>
+
+        <section id="t1" class="tab">
+          <div class="glass p-6 rounded-xl">
+            <h2 class="text-2xl font-bold mb-5">Broker Management</h2>
+
+            <div class="grid md:grid-cols-3 gap-4">
+              <input id="brokerName" placeholder="Broker Name" />
+              <input id="brokerNotes" placeholder="Notes" />
+
+              <button id="addBrokerBtn" class="btn rounded-lg">
+                Register Broker
+              </button>
+            </div>
+
+            <div class="my-5">
+              <input
+                id="brokerSearch"
+                type="text"
+                placeholder="Search brokers..."
+              />
+            </div>
+
+            <div class="mt-8">
+              <table class="w-full">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Notes</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="brokerTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="t2" class="tab">
+          <div class="glass p-6 rounded-xl">
+            <h2 class="text-2xl font-bold mb-5">Bot Management</h2>
+
+            <div class="grid md:grid-cols-4 gap-4">
+              <input id="botName" placeholder="Bot Name" />
+
+              <input id="botDescription" placeholder="Description" />
+
+              <select id="botBroker"></select>
+
+              <button id="addBotBtn" class="btn rounded-lg">
+                Register Bot
+              </button>
+            </div>
+
+            <div class="my-5">
+              <input id="botSearch" placeholder="Search Bots" />
+            </div>
+
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Broker</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody id="botTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="t3" class="tab">
+          <div class="glass p-6 rounded-xl">
+            <h2 class="text-2xl font-bold mb-5">Customer Management</h2>
+
+            <div class="grid md:grid-cols-5 gap-4">
+              <input id="customerName" placeholder="Full Name" />
+
+              <input id="customerPhone" placeholder="Phone" />
+
+              <input id="customerEmail" placeholder="Email" />
+
+              <input
+                id="customerPassword"
+                type="password"
+                placeholder="Password"
+              />
+
+              <button id="addCustomerBtn" class="btn">Create Customer</button>
+            </div>
+
+            <div class="my-5">
+              <input id="customerSearch" placeholder="Search Customer" />
+            </div>
+
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody id="customerTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="t4" class="tab">
+          <div class="glass p-6 rounded-xl">
+            <h2 class="text-2xl font-bold mb-5">Investment Management</h2>
+
+            <div class="grid md:grid-cols-5 gap-4">
+              <select id="investmentCustomer"></select>
+
+              <select id="investmentBroker"></select>
+
+              <select id="investmentBot"></select>
+
+              <input
+                id="investmentAmount"
+                type="number"
+                placeholder="Investment Amount"
+              />
+
+              <button id="addInvestmentBtn" class="btn">Add Investment</button>
+            </div>
+
+            <div class="my-5">
+              <input id="investmentSearch" placeholder="Search Investment" />
+            </div>
+
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Broker</th>
+                  <th>Bot</th>
+                  <th>Amount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody id="investmentTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="t5" class="tab">
+          <div class="glass p-6 rounded-xl">
+            <h2 class="text-3xl font-bold mb-6">Growth Analytics</h2>
+
+            <div
+              class="border-2 border-dashed border-zinc-700 rounded-xl p-12 text-center"
+            >
+              <h3 class="text-2xl mb-3">Upload MT5 Report</h3>
+
+              <p class="text-zinc-400">Supported HTML Excel</p>
+
+              <br />
+
+              <input
+                type="file"
+                id="reportFile"
+                accept=".html,.htm,.xlsx,.xls"
+              />
+
+              <br /><br />
+
+              <button id="uploadReportBtn" class="btn px-6 py-3 rounded-xl">
+                Upload Report
+              </button>
+            </div>
+
+            <div id="analyticsContainer" class="mt-8">
+              <!-- KPI CARDS -->
+
+              <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
+                <div class="glass rounded-2xl p-6 hover:scale-105 transition">
+                  <p class="text-zinc-400 text-sm">Gain</p>
+
+                  <h2
+                    id="gainValue"
+                    class="text-5xl font-black text-green-400 mt-3"
+                  >
+                    0%
+                  </h2>
+
+                  <div class="mt-4 text-xs text-green-400">▲ Growth</div>
+                </div>
+
+                <div class="glass rounded-2xl p-6 hover:scale-105 transition">
+                  <p class="text-zinc-400 text-sm">Profit</p>
+
+                  <h2 id="profitValue" class="text-5xl font-black gold mt-3">
+                    $0
+                  </h2>
+
+                  <div class="mt-4 text-xs">Monthly</div>
+                </div>
+
+                <div class="glass rounded-2xl p-6 hover:scale-105 transition">
+                  <p class="text-zinc-400 text-sm">Trades</p>
+
+                  <h2 id="tradeValue" class="text-5xl font-black mt-3">0</h2>
+
+                  <div class="mt-4 text-xs">Executed</div>
+                </div>
+
+                <div class="glass rounded-2xl p-6 hover:scale-105 transition">
+                  <p class="text-zinc-400 text-sm">Win Rate</p>
+
+                  <h2
+                    id="winRateValue"
+                    class="text-5xl font-black text-green-400 mt-3"
+                  >
+                    0%
+                  </h2>
+
+                  <div class="mt-4 text-xs">Current</div>
+                </div>
+              </div>
+
+              <div class="glass rounded-xl p-6 mt-6">
+                <h3 class="font-bold mb-5">Performance</h3>
+
+                <canvas id="growthChart"></canvas>
+                <div class="grid md:grid-cols-4 gap-5 mt-6">
+                  <div class="glass rounded-xl p-5">
+                    <div class="text-zinc-400">Balance</div>
+
+                    <div id="balanceValue" class="text-3xl font-bold">
+                      $0
+                    </div>
+                  </div>
+
+                  <div class="glass rounded-xl p-5">
+                    <div class="text-zinc-400">Drawdown</div>
+
+                    <div
+                      id="drawdownValue"
+                      class="text-3xl text-red-400 font-bold"
+                    >
+                      -4.2%
+                    </div>
+                  </div>
+
+                  <div class="glass rounded-xl p-5">
+                    <div class="text-zinc-400">Profit Factor</div>
+
+                    <div id="pfValue" class="text-3xl font-bold">0</div>
+                  </div>
+
+                  <div class="glass rounded-xl p-5">
+                    <div class="text-zinc-400">Sharpe Ratio</div>
+
+                    <div id="sharpeValue" class="text-3xl font-bold">0</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="glass rounded-xl p-6 mt-6">
+                <h3 class="font-bold mb-4">Trading Statistics</h3>
+
+                <table class="w-full">
+                  <thead>
+                    <tr>
+                      <th>Period</th>
+
+                      <th>Gain</th>
+
+                      <th>Profit</th>
+
+                      <th>Pips</th>
+
+                      <th>Win%</th>
+
+                      <th>Trades</th>
+                    </tr>
+                  </thead>
+
+                  <tbody id="analyticsTable"></tbody>
+                </table>
+              </div>
+
+              <div class="glass rounded-xl p-6 mt-6">
+                <h3 class="text-xl font-bold mb-5">Open Trades</h3>
+
+                <table class="w-full">
+                  <thead>
+                    <tr>
+                      <th>Symbol</th>
+                      <th>Type</th>
+                      <th>Lots</th>
+                      <th>Open Price</th>
+                      <th>Profit</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+
+                  <tbody id="tradeTable">
+                    <tr>
+                      <td>XAUUSD</td>
+
+                      <td class="text-red-400">SELL</td>
+
+                      <td>0</td>
+
+                      <td>0</td>
+
+                      <td class="text-green-400">0</td>
+
+                      <td>
+                        <span class="px-2 py-1 rounded bg-green-700">
+                          OPEN
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="glass rounded-xl p-6 mt-6">
+                <h3 class="text-xl font-bold mb-5">Recent Activity</h3>
+
+                <div id="activityContainer" class="space-y-4">
+                  <div>
+                    🟢 Deposit
+
+                    <span class="gold"> 0 </span>
+                  </div>
+
+                  <div>🤖 Nexus AI opened a trade</div>
+
+                  <div>🔴 Withdrawal -$500</div>
+
+                  <div>📈 Equity Updated</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="t6" class="tab">
+          <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-6 mb-6">
+            <div class="glass rounded-xl p-5">
+              <p class="text-zinc-400 text-sm">Gain</p>
+              <h2 id="botGain" class="text-4xl font-black text-green-400 mt-3">
+                0%
+              </h2>
+            </div>
+
+            <div class="glass rounded-xl p-5">
+              <p class="text-zinc-400 text-sm">Balance</p>
+              <h2 id="botBalance" class="text-4xl font-black gold mt-3">$0</h2>
+            </div>
+
+            <div class="glass rounded-xl p-5">
+              <p class="text-zinc-400 text-sm">Trades</p>
+              <h2 id="botTrades" class="text-4xl font-black mt-3">0</h2>
+            </div>
+
+            <div class="glass rounded-xl p-5">
+              <p class="text-zinc-400 text-sm">Win Rate</p>
+              <h2
+                id="botWinrate"
+                class="text-4xl font-black text-green-400 mt-3"
+              >
+                0%
+              </h2>
+            </div>
+          </div>
+          <div class="glass rounded-xl p-6 mb-6">
+            <div class="flex gap-2 mb-5">
+              <button id="growthBtn" class="chartBtn btn px-4 py-2 rounded-lg">Growth</button>
+
+              <button id="balanceBtn" class="chartBtn px-4 py-2 border border-zinc-700 rounded-lg">
+                Balance
+              </button>
+
+              <button id="profitBtn" class="chartBtn px-4 py-2 border border-zinc-700 rounded-lg">
+                Profit
+              </button>
+
+              <button id="drawdownBtn" class="chartBtn px-4 py-2 border border-zinc-700 rounded-lg">
+                Drawdown
+              </button>
+            </div>
+
+            <canvas id="botChart"></canvas>
+          </div>
+          <div class="grid md:grid-cols-4 gap-5 mb-6">
+            <div class="glass p-5 rounded-xl">
+              <div class="text-zinc-400">Profit Factor</div>
+
+              <div id="botPF" class="text-3xl font-bold">0</div>
+            </div>
+
+            <div class="glass p-5 rounded-xl">
+              <div class="text-zinc-400">Sharpe Ratio</div>
+
+              <div id="botSharpe" class="text-3xl font-bold">0</div>
+            </div>
+
+            <div class="glass p-5 rounded-xl">
+              <div class="text-zinc-400">Drawdown</div>
+
+              <div id="botDD" class="text-3xl font-bold text-red-400">0%</div>
+            </div>
+
+            <div class="glass p-5 rounded-xl">
+              <div class="text-zinc-400">Equity</div>
+
+              <div id="botEquity" class="text-3xl font-bold">$0</div>
+            </div>
+          </div>
+          <div class="glass rounded-xl p-6">
+            <h3 class="text-xl font-bold mb-4">Open Trades</h3>
+
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+
+                  <th>Type</th>
+
+                  <th>Lot</th>
+
+                  <th>Open</th>
+
+                  <th>Profit</th>
+
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody id="botTradeTable">
+                <tr>
+                  <td colspan="6" class="text-center py-10 text-zinc-500">
+                    No active trades.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="glass rounded-xl p-6 mt-6">
+            <h3 class="font-bold mb-4">Recent Activity</h3>
+
+            <div id="botActivity" class="space-y-3 text-sm">
+              <div class="text-zinc-500">No recent activity.</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+      <script src="js/storage.js"></script>
+      <script src="js/auth.js"></script>
+      <script src="js/ui.js"></script>
+      <script src="js/dashboard.js"></script>
+      <script src="js/brokers.js"></script>
+      <script src="js/bots.js"></script>
+      <script src="js/customers.js"></script>
+      <script src="js/investments.js"></script>
+      <script src="js/reportParser.js"></script>
+      <script src="js/analytics.js"></script>
+      <script src="js/botAnalysis.js"></script>
+      <script src="js/charts.js"></script>
+      <script src="js/app.js"></script>
+    </div>
+  </body>
+</html>
